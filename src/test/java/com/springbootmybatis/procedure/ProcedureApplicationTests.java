@@ -23,4 +23,8 @@ public class ProcedureApplicationTests {
         orders.stream().forEach(System.out::println);
     }
 
+    @Test
+    public void test(){
+        orderMapper.cancelOrder("20001");
+    }
 }
