@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springbootmybatis.procedure.mapper.ProductMapper">
+
+    
+<select id="findById"
+        parameterType="int"
+        statementType="CALLABLE"
+        resultType="com.springbootmybatis.procedure.vo.ProductVo">
+      call find_category_id(
+      #{cid,mode=IN,jdbcType=INTEGER},
+      #{currentPage,mode=IN,jdbcType=INTEGER},
+      #{pageSize,mode=IN,jdbcType=INTEGER},
+      #{total,mode=OUT,jdbcType=INTEGER},
+      #{pageCount,mode=OUT,jdbcType=INTEGER}
+      )
+    </select>
+</mapper>
