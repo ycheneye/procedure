@@ -9,5 +9,6 @@ import lombok.Getter;
 @Getter
 public enum RedisEnum {
     PRODUCT_PREFIX,
-    CATEGORY_PREFIX
+    CATEGORY_PREFIX,
+    CART_PREFIX
 }

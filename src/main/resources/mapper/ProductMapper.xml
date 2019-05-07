@@ -15,4 +15,8 @@
       #{pageCount,mode=OUT,jdbcType=INTEGER}
       )
     </select>
+
+    <select id="isExists" resultType="Product">
+        select * from xmcc_product where id=#{productId}
+    </select>
 </mapper>

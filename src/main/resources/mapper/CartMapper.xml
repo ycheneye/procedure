@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.springbootmybatis.procedure.mapper.CartMapper">
+    <resultMap id="BaseMap" type="com.springbootmybatis.procedure.vo.CartVo">
+        <result property="userId" column="user_id"/>
+        <collection property="cartProductVoList" ofType="com.springbootmybatis.procedure.vo.CartProductVo">
+            <result property="productId" column="product_id"/>
+            <result property="quantity" column="quantity"/>
+            <result property="productName" column="name"/>
+            <result property="productSubtitle" column="subtitle"/>
+            <result property="productMainImage" column="main_image"/>
+            <result property="productPrice" column="price"/>
+            <result property="productStatus" column="status"/>
+            <result property="productChecked" column="checked"/>
+            <result property="productTotalPrice" column="productTotalPrice"/>
+        </collection>
+    </resultMap>
+    <select id="findByUserId" parameterType="int" resultMap="BaseMap">
+      SELECT c.`user_id`,
+      c.`product_id`,c.`quantity`,xp.`name`,xp.`subtitle`,xp.`main_image`,xp.`price`,xp.`status`,c.`checked`
+      ,xp.`price`*c.`quantity` AS 'productTotalPrice'
+      FROM `xmcc_cart` c LEFT JOIN `xmcc_product` xp ON c.`product_id`=xp.`id` AND user_id=#{userId}
+    </select>
+
+    <select id="exists" resultType="int">
+        select count(id) from xmcc_cart where user_id=#{userId} and product_id=#{productId}
+    </select>
+
+    <update id="updateQuantity">
+        update xmcc_cart set quantity=quantity+#{quantity} where user_id=#{userId} and product_id=#{productId}
+    </update>
+
+    <insert id="insert">
+        insert into xmcc_cart (user_id, product_id,
+                                quantity, checked, create_time,
+                                update_time)
+        values ( #{userId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER},
+                #{quantity,jdbcType=INTEGER},1, now(),
+                now())
+    </insert>
+
+    <delete id="deleteCartItem">
+        delete from xmcc_cart where user_id=#{userid} and product_id=#{productId}
+    </delete>
+</mapper>

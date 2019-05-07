@@ -1,7 +1,9 @@
 package com.springbootmybatis.procedure.mapper;
 
+import com.springbootmybatis.procedure.entity.Product;
 import com.springbootmybatis.procedure.vo.ProductVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -14,4 +16,6 @@ import java.util.Map;
 @Mapper
 public interface ProductMapper {
     List<ProductVo> findById(Map<String, Object> map);
+
+    Product isExists(@Param("productId") Integer productId);
 }
